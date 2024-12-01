@@ -25,10 +25,10 @@ func parse(input string) ([]int, []int) {
 	lines := strings.Split(input, "\n")
 	left := make([]int, len(lines))
 	right := make([]int, len(lines))
-	for _, line := range lines {
+	for i, line := range lines {
 		l, r, _ := strings.Cut(line, "   ")
-		left = append(left, mustParseInt(l))
-		right = append(right, mustParseInt(r))
+		left[i] = mustParseInt(l)
+		right[i] = mustParseInt(r)
 	}
 	return left, right
 }
