@@ -2,23 +2,17 @@ package day1
 
 import (
 	"fmt"
-	"os"
 	"slices"
-	"strconv"
 	"strings"
+
+	"github.com/dredly/aoc2024/internal/files"
+	"github.com/dredly/aoc2024/internal/maths"
+	"github.com/dredly/aoc2024/internal/parsing"
 )
 
 func Part1Answer() {
-	left, right := parse(mustReadFile("inputdata/day1/real.txt"))
+	left, right := parse(files.MustRead("inputdata/day1/real.txt"))
 	fmt.Printf("Day 1 part 1 answer: %d\n", totalDistance(left, right))
-}
-
-func mustReadFile(path string) string {
-	bs, err := os.ReadFile(path)
-	if err !=nil {
-		panic("error reading file")
-	}
-	return string(bs)
 }
 
 func parse(input string) ([]int, []int) {
@@ -27,8 +21,8 @@ func parse(input string) ([]int, []int) {
 	right := make([]int, len(lines))
 	for i, line := range lines {
 		l, r, _ := strings.Cut(line, "   ")
-		left[i] = mustParseInt(l)
-		right[i] = mustParseInt(r)
+		left[i] = parsing.MustParseInt(l)
+		right[i] = parsing.MustParseInt(r)
 	}
 	return left, right
 }
@@ -39,22 +33,7 @@ func totalDistance(left, right []int) int {
 	var total int
 	for i, locIDLeft := range left {
 		locIDRight := right[i]
-		total += abs(locIDRight - locIDLeft)
+		total += maths.Abs(locIDRight - locIDLeft)
 	}
 	return total
-}
-
-func mustParseInt(input string) int {
-	res, err := strconv.Atoi(input)
-	if err != nil {
-		panic("Failed to convert string to int")
-	}
-	return res
-}
-
-func abs(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
 }

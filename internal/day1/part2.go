@@ -1,9 +1,13 @@
 package day1
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/dredly/aoc2024/internal/files"
+)
 
 func Part2Answer() {
-	left, right := parse(mustReadFile("inputdata/day1/real.txt"))
+	left, right := parse(files.MustRead("inputdata/day1/real.txt"))
 	fmt.Printf("Day 1 part 2 answer: %d\n", similarity(left, right))
 }
 
