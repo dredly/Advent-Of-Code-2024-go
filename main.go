@@ -5,6 +5,7 @@ import (
 	"github.com/dredly/aoc2024/internal/day2"
 	"github.com/dredly/aoc2024/internal/day3"
 	"github.com/dredly/aoc2024/internal/day4"
+	"github.com/dredly/aoc2024/internal/day5"
 )
 
 func main() {
@@ -19,4 +20,6 @@ func main() {
 
 	day4.Part1Answer()
 	day4.Part2Answer()
+
+	day5.Part1Answer()
 }
