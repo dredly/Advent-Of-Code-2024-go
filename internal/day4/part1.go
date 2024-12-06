@@ -18,7 +18,7 @@ func numXmasAppearances(input string) int {
 	g := NewRuneGrid(input)
 	xCoords := g.findAllCoords('X')
 	for _, c := range xCoords {
-		mCoords := g.searchNeighbours(c, 'M')
+		mCoords := g.searchNeighbours(c, 'M', allDirectionsClockwise)
 		for _, d := range maps.Keys(mCoords) {
 			if g.findSeq(mCoords[d], d, []rune("AS")) {
 				total++
@@ -28,8 +28,8 @@ func numXmasAppearances(input string) int {
 	return total
 }
 
-var allDirections = []Direction{
-	DirectionUp, DirectionDown, DirectionLeft, DirectionRight, DirectionTopLeft, DirectionTopRight, DirectionBottomLeft, DirectionBottomRight,
+var allDirectionsClockwise = []Direction{
+	DirectionUp,  DirectionTopRight, DirectionRight, DirectionBottomRight, DirectionDown, DirectionBottomLeft, DirectionLeft, DirectionTopLeft, 
 }
 
 type Grid[T comparable] struct {
@@ -52,9 +52,9 @@ func (g Grid[T]) at(c Coord) T {
 	return g.rows[c.y][c.x]
 }
 
-func (g Grid[T]) searchNeighbours(start Coord, want T) (map[Direction]Coord) {
+func (g Grid[T]) searchNeighbours(start Coord, want T, directions []Direction) (map[Direction]Coord) {
 	found := make(map[Direction]Coord)
-	for _, d := range allDirections {
+	for _, d := range directions {
 		neighbour := start.Neighbour(d)
 		if g.isInBounds(neighbour) && g.at(neighbour) == want {
 			found[d] = neighbour

@@ -18,4 +18,5 @@ func main() {
 	day3.Part2Answer()
 
 	day4.Part1Answer()
+	day4.Part2Answer()
 }
