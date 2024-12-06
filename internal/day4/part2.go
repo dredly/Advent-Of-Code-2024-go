@@ -2,15 +2,11 @@ package day4
 
 import (
 	"fmt"
-	"slices"
 
 	"github.com/dredly/aoc2024/internal/files"
+	"github.com/dredly/aoc2024/internal/grid"
 	"golang.org/x/exp/maps"
 )
-
-var diagonalDirections = []Direction{
-	DirectionTopLeft, DirectionTopRight, DirectionBottomLeft, DirectionBottomRight,
-}
 
 func Part2Answer() {
 	input := files.MustRead("inputdata/day4/real.txt")
@@ -19,14 +15,14 @@ func Part2Answer() {
 
 func numCrossedMASAppearances(input string) int {
 	var total int
-	g := NewRuneGrid(input)
-	aCoords := g.findAllCoords('A')
+	g := grid.NewRuneGrid(input)
+	aCoords := g.FindAllCoords('A')
 	for _, c := range(aCoords) {
-		mCoords := g.searchNeighbours(c, 'M', diagonalDirections)
+		mCoords := g.SearchNeighbours(c, 'M', grid.DiagonalDirections)
 		var foundMASes int
 		for _, d := range maps.Keys(mCoords) {
-			if g.isInBounds(c.Neighbour(d.Opposite())) {
-				opp := g.at(c.Neighbour(d.Opposite()))
+			if g.IsInBounds(c.Neighbour(d.Opposite())) {
+				opp := g.At(c.Neighbour(d.Opposite()))
 				if opp == 'S' {
 					foundMASes++
 				}
@@ -37,10 +33,4 @@ func numCrossedMASAppearances(input string) int {
 		}
 	}
 	return total
-}
-
-func (d Direction) Opposite() Direction {
-	idx := slices.Index(allDirectionsClockwise, d)
-	oppIdx := (idx + 4) % 8
-	return allDirectionsClockwise[oppIdx]
 }
