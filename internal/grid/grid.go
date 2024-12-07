@@ -71,6 +71,20 @@ func (g Grid[T]) FindSeq(start Coord, d Direction, seq []T) bool {
 	return true
 }
 
+func (g Grid[T]) RemainingInDirection(start Coord, d Direction) []T {
+	current := start
+	var remaining []T
+	for g.IsInBounds(current) {
+		next := current.Neighbour(d)
+		if !g.IsInBounds(next) {
+			continue
+		}
+		remaining = append(remaining, g.At(next))
+		current = next
+	}
+	return remaining
+}
+
 func (g Grid[T]) IsInBounds(c Coord) bool {
 	return c.x >= 0 && c.x < len(g.rows[0]) && c.y >= 0 && c.y < len(g.rows)
 }
